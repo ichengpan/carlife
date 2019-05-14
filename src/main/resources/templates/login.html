@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="/loginpage/css/login.css">
+</head>
+<body>
+<div class="dowebok">
+    <div class="logo"></div>
+    <form id="loginForm" action="/login" method="post">
+        <h4 th:text="${msg}"/>
+        <div class="form-item">
+            <input name="username" type="text" autocomplete="off" placeholder="邮箱">
+            <p class="tip">请输入合法的邮箱地址</p>
+        </div>
+        <div class="form-item">
+            <input name="password" type="password" autocomplete="off" placeholder="登录密码">
+            <p class="tip">邮箱或密码不正确</p>
+        </div>
+        <div class="form-item"><button id="submit">登 录</button></div>
+        <div class="reg-bar">
+            <a class="reg" href="javascript:">立即注册</a>
+            <a class="forget" href="javascript:">忘记密码</a>
+        </div>
+    </form>
+</div>
+<script src="/loginpage/js/jquery.min.js"></script>
+<script>
+    function submitData(){
+        var username = $("input[name='username']").val();
+        var password = $("input[name='password']").val();
+        if (username == "" || username == null || username == undefined) {
+            alert("用户名不能为空");
+            return false;/*阻止表单提交*/
+        } else if (password == "" || password == null || password == undefined) {
+            alert("密码不能为空");
+            return false;
+        } else {
+            $("#loginForm").submit();
+        }
+    }
+    $(function () {
+        $('#submit').click(function(){
+            submitData();
+        });
+    })
+</script>
+</body>
+</html>
