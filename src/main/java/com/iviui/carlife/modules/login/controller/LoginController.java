@@ -1,13 +1,22 @@
 package com.iviui.carlife.modules.login.controller;
 
+import com.iviui.carlife.modules.login.service.LoginService;
+import com.iviui.carlife.modules.login.vo.SysRole;
+import com.iviui.carlife.modules.login.vo.UserInfo;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author: ChengPan
@@ -16,6 +25,9 @@ import java.util.Map;
  */
 @Controller
 class LoginController {
+
+    @Autowired
+    private LoginService loginService;
 
     @RequestMapping(value="/index")
     public String index(){
@@ -26,6 +38,42 @@ class LoginController {
     @RequestMapping({"/","/login"})
     public String login(){
         return"/login";
+    }
+
+    @RequestMapping(value = "/register", method=RequestMethod.GET)
+    public String register() {
+        return "registerPage";
+    }
+
+    @RequestMapping(value = "/register", method=RequestMethod.POST)
+    public String doRegister(UserInfo userInfo) {
+        // 生成uuid
+        String id = UUID.randomUUID().toString().replaceAll("-","");
+        userInfo.setSalt(id);
+        // 将用户名作为盐值
+        ByteSource salt = ByteSource.Util.bytes(userInfo.getCredentialsSalt());
+        /*
+         * MD5加密：
+         * 使用SimpleHash类对原始密码进行加密。
+         * 第一个参数代表使用MD5方式加密
+         * 第二个参数为原始密码
+         * 第三个参数为盐值，即用户名
+         * 第四个参数为加密次数
+         * 最后用toHex()方法将加密后的密码转成String
+         * */
+        String newPs = new SimpleHash("MD5", userInfo.getPassword(), salt, 2).toHex();
+        System.out.println(newPs);
+        userInfo.setPassword(newPs);
+        userInfo.setName("测试用户");
+        userInfo.setState((byte) 0);
+        List<SysRole> roleList = new ArrayList<SysRole>();
+        SysRole sysRole = new SysRole();
+        sysRole.setId((long) 2);
+        roleList.add(sysRole);
+        userInfo.setRoleList(roleList);
+        boolean result = loginService.registerData(userInfo);
+
+        return "/register";
     }
 
     @RequestMapping(value="/noAuth",method= RequestMethod.GET)

@@ -20,4 +20,11 @@ public interface LoginService {
 
     /**通过username查找用户信息;*/
     public UserInfo findByUsername(String username);
+
+    /**
+     * 用户注册
+     * @param userInfo 用户名密码
+     * @return 是否注册成功
+     */
+    boolean registerData(UserInfo userInfo);
 }

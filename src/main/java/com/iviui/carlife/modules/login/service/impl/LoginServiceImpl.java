@@ -41,4 +41,16 @@ public class LoginServiceImpl implements LoginService {
         System.out.println("UserInfoServiceImpl.findByUsername()");
         return userInfoRepository.findByUsername(username);
     }
+
+    @Override
+    public boolean registerData(UserInfo userInfo) {
+        userInfoRepository.save(userInfo);
+       /*看数据库中是否存在该账户
+        Map<String, Object> userInfo = queryInfoByUsername(username);
+        if(userInfo == null) {
+            userMapper.insertData(dataMap);
+            return true;
+        }*/
+        return true;
+    }
 }
