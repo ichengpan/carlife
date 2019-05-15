@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Insert title here</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <script src="/layui/layui.js"></script>
 </head>
 <body>
 
 <h3>主界面--<span th:text="'登录账号：'+${userInfo.username}+'--名称：'+${userInfo.name}">user</span></h3>
 <a href="/logout">退出</a>
-<hr />
+<hr/>
+<ul class="layui-nav">
+    <li class="layui-nav-item">
+        <a href="">控制台<span class="layui-badge">9</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="">个人中心<span class="layui-badge-dot"></span></a>
+    </li>
+    <li class="layui-nav-item" lay-unselect="">
+        <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;">修改信息</a></dd>
+            <dd><a href="javascript:;">安全管理</a></dd>
+            <dd><a href="/logout">退出</a></dd>
+        </dl>
+    </li>
+</ul>
 
 
 <!-- 这些实际从数据库中进行查询，可以在 -->
@@ -18,14 +36,17 @@
 </p>
 
 <p shiro:hasPermission="userInfo:query">
-    <a href="/userInfo/userList">用户查询</a>
+    <a href="/userInfo/userQuery">用户查询</a>
 </p>
 <p shiro:hasPermission="userInfo:add">
     <a href="/userInfo/userAdd">用户添加</a>
 </p>
+<p shiro:hasPermission="userInfo:del">
+    <a href="/userInfo/userDel">用户删除</a>
+</p>
 
 
-<hr />
+<hr/>
 <h5>从数据库加载菜单</h5>
 <div th:each="roleList:${userInfo.roleList}">
     <span th:text="${roleList.description}"></span>
@@ -34,6 +55,16 @@
         <a th:href="${permission.url}" th:text="${permission.name}"></a>
     </p>
 </div>
+<script>
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
+        //监听导航点击
+        element.on('nav(demo)', function (elem) {
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+</script>
 </body>
 </html>
