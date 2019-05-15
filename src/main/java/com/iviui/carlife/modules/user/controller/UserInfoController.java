@@ -26,9 +26,9 @@ public class UserInfoController {
         return"userDel";
     }
 
-    @RequestMapping(value="/userInfo",method= RequestMethod.GET)
+    @RequestMapping(value="/userList",method= RequestMethod.GET)
     @RequiresPermissions("userInfo:view")
     public String userInfo(){
-        return"userInfo";
+        return "userList";
     }
 }

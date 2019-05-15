@@ -1,45 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>INDEX</title>
-    <link rel="stylesheet" href="/layui/css/layui.css">
-    <script src="/layui/layui.js"></script>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
 </head>
 <body>
-    <ul class="layui-nav">
-        <li class="layui-nav-item"><a href="">最新活动</a></li>
-        <li class="layui-nav-item layui-this">
-            <a href="javascript:;">产品</a>
-            <dl class="layui-nav-child">
-                <dd><a href="">选项1</a></dd>
-                <dd><a href="">选项2</a></dd>
-                <dd><a href="">选项3</a></dd>
-            </dl>
-        </li>
-        <li class="layui-nav-item"><a href="">大数据</a></li>
-        <li class="layui-nav-item">
-            <a href="javascript:;">解决方案</a>
-            <dl class="layui-nav-child">
-                <dd><a href="">移动模块</a></dd>
-                <dd><a href="">后台模版</a></dd>
-                <dd class="layui-this"><a href="">选中项</a></dd>
-                <dd><a href="">电商平台</a></dd>
-            </dl>
-        </li>
-        <li class="layui-nav-item"><a href="">社区</a></li>
-    </ul>
 
-    <script>
-        layui.use('element', function(){
-            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+<h3>主界面--<span th:text="'登录账号：'+${userInfo.username}+'--名称：'+${userInfo.name}">user</span></h3>
+<a href="/logout">退出</a>
+<hr />
 
-            //监听导航点击
-            element.on('nav(demo)', function(elem){
-                //console.log(elem)
-                layer.msg(elem.text());
-            });
-        });
-    </script>
+
+<!-- 这些实际从数据库中进行查询，可以在 -->
+<h5>这是通过shiro标签的方式;</h5>
+<p shiro:hasRole="admin">
+    <a>管理员角色</a>
+</p>
+
+<p shiro:hasPermission="userInfo:query">
+    <a href="/userInfo/userList">用户查询</a>
+</p>
+<p shiro:hasPermission="userInfo:add">
+    <a href="/userInfo/userAdd">用户添加</a>
+</p>
+
+
+<hr />
+<h5>从数据库加载菜单</h5>
+<div th:each="roleList:${userInfo.roleList}">
+    <span th:text="${roleList.description}"></span>
+    <!-- 角色下所有的所有菜单,实际开发中，只需要获取所有的权限就可以了，无所谓是哪个角色的； -->
+    <p style="color:blue;margin-left:30px;" th:each="permission:${roleList.permissions}">
+        <a th:href="${permission.url}" th:text="${permission.name}"></a>
+    </p>
+</div>
+
 </body>
 </html>

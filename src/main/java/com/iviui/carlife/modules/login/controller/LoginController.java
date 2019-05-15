@@ -3,9 +3,11 @@ package com.iviui.carlife.modules.login.controller;
 import com.iviui.carlife.modules.login.service.LoginService;
 import com.iviui.carlife.modules.login.vo.SysRole;
 import com.iviui.carlife.modules.login.vo.UserInfo;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,13 +31,17 @@ class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping(value="/index")
-    public String index(){
+    @RequestMapping(value={"/","/index"})
+    public String index(Map<String,Object> map){
         System.out.println("登陆成功");
+        //获取到用户信息;
+        Subject subject  = SecurityUtils.getSubject();
+        UserInfo ui = (UserInfo) subject.getPrincipal();
+        map.put("userInfo",ui);
         return"/index";
     }
 
-    @RequestMapping({"/","/login"})
+    @RequestMapping(value = "/login")
     public String login(){
         return"/login";
     }

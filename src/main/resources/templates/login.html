@@ -12,11 +12,11 @@
     <form id="loginForm" action="/login" method="post">
         <h4 th:text="${msg}"/>
         <div class="form-item">
-            <input name="username" type="text" autocomplete="off" placeholder="邮箱">
+            <input name="username" type="text" value="admin" autocomplete="off" placeholder="邮箱">
             <p class="tip">请输入合法的邮箱地址</p>
         </div>
         <div class="form-item">
-            <input name="password" type="password" autocomplete="off" placeholder="登录密码">
+            <input name="password" type="password" value="123456" autocomplete="off" placeholder="登录密码">
             <p class="tip">邮箱或密码不正确</p>
         </div>
         <div class="form-item"><button id="submit">登 录</button></div>
