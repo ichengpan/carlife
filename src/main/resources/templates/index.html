@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Insert title here</title>
@@ -7,53 +7,47 @@
     <script src="/layui/layui.js"></script>
 </head>
 <body>
-
-<h3>主界面--<span th:text="'登录账号：'+${userInfo.username}+'--名称：'+${userInfo.name}">user</span></h3>
-<a href="/logout">退出</a>
-<hr/>
-<ul class="layui-nav">
-    <li class="layui-nav-item">
-        <a href="">控制台<span class="layui-badge">9</span></a>
-    </li>
-    <li class="layui-nav-item">
-        <a href="">个人中心<span class="layui-badge-dot"></span></a>
-    </li>
-    <li class="layui-nav-item" lay-unselect="">
-        <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
-        <dl class="layui-nav-child">
-            <dd><a href="javascript:;">修改信息</a></dd>
-            <dd><a href="javascript:;">安全管理</a></dd>
-            <dd><a href="/logout">退出</a></dd>
-        </dl>
-    </li>
-</ul>
-
-
-<!-- 这些实际从数据库中进行查询，可以在 -->
-<h5>这是通过shiro标签的方式;</h5>
-<p shiro:hasRole="admin">
-    <a>管理员角色</a>
-</p>
-
-<p shiro:hasPermission="userInfo:query">
-    <a href="/userInfo/userQuery">用户查询</a>
-</p>
-<p shiro:hasPermission="userInfo:add">
-    <a href="/userInfo/userAdd">用户添加</a>
-</p>
-<p shiro:hasPermission="userInfo:del">
-    <a href="/userInfo/userDel">用户删除</a>
-</p>
-
-
-<hr/>
-<h5>从数据库加载菜单</h5>
-<div th:each="roleList:${userInfo.roleList}">
-    <span th:text="${roleList.description}"></span>
-    <!-- 角色下所有的所有菜单,实际开发中，只需要获取所有的权限就可以了，无所谓是哪个角色的； -->
-    <p style="color:blue;margin-left:30px;" th:each="permission:${roleList.permissions}">
-        <a th:href="${permission.url}" th:text="${permission.name}"></a>
-    </p>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">汽车生活</div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item">
+                <a href="">控制台<span class="layui-badge">9</span></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="">个人中心<span class="layui-badge-dot"></span></a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item" lay-unselect="">
+                <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img"><span
+                        th:text="${userInfo.name}"></span></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">修改信息</a></dd>
+                    <dd><a href="javascript:;">安全管理</a></dd>
+                    <dd><a href="/logout">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!--左侧导航栏-->
+            <ul class="layui-nav layui-nav-tree">
+                <li th:each="parent:${list}" class="layui-nav-item">
+                    <a th:text="${parent.name}"></a>
+                    <dl class="layui-nav-child">
+                        <dd th:each="child:${parent.children}">
+                            <a target="layui-body" th:href="${child.url}" th:text="${child.name}"></a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <iframe name="layui-body" id="iframe" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+    </div>
 </div>
 <script>
     layui.use('element', function () {

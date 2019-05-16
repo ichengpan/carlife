@@ -48,10 +48,17 @@ CREATE TABLE `sys_permission` (
 -- ----------------------------
 -- Records of sys_permission
 -- ----------------------------
-INSERT INTO `sys_permission` VALUES ('1', '', '用户管理', '0', '0/', 'userInfo:view', 'menu', 'userInfo/userList');
-INSERT INTO `sys_permission` VALUES ('2', '', '用户添加', '1', '0/1', 'userInfo:add', 'button', 'userInfo/userAdd');
-INSERT INTO `sys_permission` VALUES ('3', '', '用户删除', '1', '0/1', 'userInfo:del', 'button', 'userInfo/userDel');
-INSERT INTO `sys_permission` VALUES ('4', '', '用户查询', '1', '0/1', 'userInfo:query', 'button', 'userInfo/userQuery');
+INSERT INTO `sys_permission` VALUES ('1', '', '权限设置', '0', '0', 'permission:main', 'menu', null);
+INSERT INTO `sys_permission` VALUES ('2', '', '用户管理', '1', '0/1', 'userInfo:info', 'menu', 'userInfo/userInfo');
+INSERT INTO `sys_permission` VALUES ('3', '', '用户添加', '2', '0/1/2', 'userInfo:add', 'button', 'userInfo/userAdd');
+INSERT INTO `sys_permission` VALUES ('4', '', '用户删除', '2', '0/1/2', 'userInfo:del', 'button', 'userInfo/userDel');
+INSERT INTO `sys_permission` VALUES ('5', '', '用户修改', '2', '0/1/2', 'userInfo:edit', 'button', 'userInfo/userUpdate');
+INSERT INTO `sys_permission` VALUES ('6', '', '用户查询', '2', '0/1/2', 'userInfo:query', 'button', 'userInfo/userList');
+INSERT INTO `sys_permission` VALUES ('7', '', '角色管理', '1', '0/1', 'role:info', 'menu', 'role/roleInfo');
+INSERT INTO `sys_permission` VALUES ('8', '', '角色添加', '7', '0/1/7', 'role:add', 'button', 'role/roleAdd');
+INSERT INTO `sys_permission` VALUES ('9', '', '角色删除', '7', '0/1/7', 'role:del', 'button', 'role/roleDel');
+INSERT INTO `sys_permission` VALUES ('10', '', '角色修改', '7', '0/1/7', 'role:edit', 'button', 'role/roleUpdate');
+INSERT INTO `sys_permission` VALUES ('11', '', '角色查询', '7', '0/1/7', 'role:query', 'button', 'role/roleList');
 
 -- ----------------------------
 -- Table structure for `sys_role`
@@ -87,6 +94,15 @@ CREATE TABLE `sys_role_permission` (
 -- ----------------------------
 INSERT INTO `sys_role_permission` VALUES ('1', '1');
 INSERT INTO `sys_role_permission` VALUES ('1', '2');
+INSERT INTO `sys_role_permission` VALUES ('1', '3');
+INSERT INTO `sys_role_permission` VALUES ('1', '4');
+INSERT INTO `sys_role_permission` VALUES ('1', '5');
+INSERT INTO `sys_role_permission` VALUES ('1', '6');
+INSERT INTO `sys_role_permission` VALUES ('1', '7');
+INSERT INTO `sys_role_permission` VALUES ('1', '8');
+INSERT INTO `sys_role_permission` VALUES ('1', '9');
+INSERT INTO `sys_role_permission` VALUES ('1', '10');
+INSERT INTO `sys_role_permission` VALUES ('1', '11');
 
 -- ----------------------------
 -- Table structure for `sys_user_role`
@@ -110,7 +126,7 @@ INSERT INTO `sys_user_role` VALUES ('1', '2');
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
-  `uid` bigint(20) NOT NULL COMMENT '用户id',
+  `uid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `name` varchar(255) DEFAULT NULL COMMENT '昵称',
   `password` varchar(255) DEFAULT NULL COMMENT '密码',
   `salt` varchar(255) DEFAULT NULL COMMENT '加密密码的盐',
@@ -118,7 +134,7 @@ CREATE TABLE `user_info` (
   `username` varchar(255) DEFAULT NULL COMMENT '用户名',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `UK_f2ksd6h8hsjtd57ipfq9myr64` (`username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_info

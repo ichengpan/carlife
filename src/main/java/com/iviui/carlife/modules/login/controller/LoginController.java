@@ -1,6 +1,7 @@
 package com.iviui.carlife.modules.login.controller;
 
 import com.iviui.carlife.modules.login.service.LoginService;
+import com.iviui.carlife.modules.login.vo.SysPermission;
 import com.iviui.carlife.modules.login.vo.SysRole;
 import com.iviui.carlife.modules.login.vo.UserInfo;
 import org.apache.shiro.SecurityUtils;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author: ChengPan
@@ -36,8 +34,41 @@ class LoginController {
         System.out.println("登陆成功");
         //获取到用户信息;
         Subject subject  = SecurityUtils.getSubject();
-        UserInfo ui = (UserInfo) subject.getPrincipal();
-        map.put("userInfo",ui);
+        UserInfo userInfo = (UserInfo) subject.getPrincipal();
+        List<SysRole> roleList = userInfo.getRoleList();
+        //用户拥有的所有权限的集合，有可能有重复权限
+        List<SysPermission> permissions = new ArrayList<SysPermission>();
+        for(SysRole role: roleList){
+            permissions.addAll(role.getPermissions());
+        }
+        //用户拥有的所有权限 不重复
+        Map<Long,SysPermission> permissionMap = new HashMap<Long,SysPermission>();
+        for (SysPermission permission:permissions){
+            permissionMap.put(permission.getId(),permission);
+        }
+        //传给页面展示 放所有的父节点对象，将子节点嵌套到父节点集合中
+        List<SysPermission> resultData = new ArrayList<SysPermission>();
+        for (Map.Entry<Long,SysPermission> entry : permissionMap.entrySet()) {
+            SysPermission permission = entry.getValue();
+            if (0 == permission.getParentId()){
+                //一级菜单
+                resultData.add(permission);
+            } else {
+                //二级菜单
+                //根据pid找到父节点
+                Long parentId = permission.getParentId();
+                //父节点
+                SysPermission parentPermission = permissionMap.get(parentId);
+                if (parentPermission.getChildren() == null){
+                    parentPermission.setChildren(new ArrayList());
+                }
+                parentPermission.getChildren().add(permission);
+
+            }
+
+        }
+        map.put("userInfo",userInfo);
+        map.put("list",resultData);
         return"/index";
     }
 

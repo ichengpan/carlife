@@ -3,13 +3,7 @@ package com.iviui.carlife.modules.login.vo;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 /**
  * @author: ChengPan
@@ -31,6 +25,8 @@ public class SysPermission implements Serializable {
     private Long parentId; //父编号
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;
+    @Transient
+    private List children;
 
     @ManyToMany
     @JoinTable(name = "sys_role_permission", joinColumns = {@JoinColumn(name = "permission_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
@@ -42,6 +38,14 @@ public class SysPermission implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List getChildren() {
+        return children;
+    }
+
+    public void setChildren(List children) {
+        this.children = children;
     }
 
     public String getName() {

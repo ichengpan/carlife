@@ -14,21 +14,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/userInfo")
 public class UserInfoController {
 
+    @RequestMapping(value="/userInfo",method= RequestMethod.GET)
+    @RequiresPermissions("userInfo:info")
+    public String userInfo(){
+        return"/user/userInfo";
+    }
+
     @RequestMapping(value="/userAdd",method= RequestMethod.GET)
     @RequiresPermissions("userInfo:add")
     public String userAdd(){
-        return"userAdd";
+        return"/user/userAdd";
     }
 
     @RequestMapping(value="/userDel",method= RequestMethod.GET)
     @RequiresPermissions("userInfo:del")
     public String userDel(){
-        return"userDel";
+        return"/user/userDel";
+    }
+
+    @RequestMapping(value="/userUpdate",method= RequestMethod.GET)
+    @RequiresPermissions("userInfo:edit")
+    public String userUpdate(){
+        return "/user/userUpdate";
     }
 
     @RequestMapping(value="/userList",method= RequestMethod.GET)
-    @RequiresPermissions("userInfo:view")
-    public String userInfo(){
-        return "userList";
+    @RequiresPermissions("userInfo:query")
+    public String userList(){
+        return "/user/userList";
     }
 }
