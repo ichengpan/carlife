@@ -101,16 +101,16 @@ class LoginController {
         String newPs = new SimpleHash("MD5", userInfo.getPassword(), salt, 2).toHex();
         System.out.println(newPs);
         userInfo.setPassword(newPs);
-        userInfo.setName("测试用户");
+        userInfo.setName("程少爷");
         userInfo.setState((byte) 0);
         List<SysRole> roleList = new ArrayList<SysRole>();
         SysRole sysRole = new SysRole();
-        sysRole.setId((long) 2);
+        sysRole.setId((long) 1);
         roleList.add(sysRole);
         userInfo.setRoleList(roleList);
         boolean result = loginService.registerData(userInfo);
 
-        return "/register";
+        return "/login";
     }
 
     @RequestMapping(value="/noAuth",method= RequestMethod.GET)
