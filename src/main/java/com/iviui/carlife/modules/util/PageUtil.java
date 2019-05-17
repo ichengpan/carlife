@@ -8,7 +8,7 @@ import java.util.List;
  * @date: 2019/5/14
  * @description: layUI分页工具类
  */
-public class LayUIPageList implements Serializable {
+public class PageUtil implements Serializable {
 
 	private static final long serialVersionUID = 620421858510718076L;
 
@@ -17,9 +17,14 @@ public class LayUIPageList implements Serializable {
 	private String msg;
 	private List data;
 	private Integer page;
-	private Integer size; 
+	private Integer size;
 
-	public LayUIPageList(Page page,Long recordsTotal,  List data) {
+	public PageUtil(Integer page,Integer limit) {
+		this.page=page;
+		this.size =limit;
+	}
+
+	public PageUtil(Page page, Long recordsTotal, List data) {
 		super();
 		this.page = page.getPagenum();
 		this.size = page.getPagesize();

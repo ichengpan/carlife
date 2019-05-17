@@ -1,9 +1,17 @@
 package com.iviui.carlife.modules.user.controller;
 
+import com.iviui.carlife.modules.login.vo.UserInfo;
+import com.iviui.carlife.modules.user.service.UserInfoService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: ChengPan
@@ -13,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/userInfo")
 public class UserInfoController {
+
+    @Resource
+    private UserInfoService userInfoService;
 
     @RequestMapping(value="/userInfo",method= RequestMethod.GET)
     @RequiresPermissions("userInfo:info")
@@ -40,7 +51,15 @@ public class UserInfoController {
 
     @RequestMapping(value="/userList",method= RequestMethod.GET)
     @RequiresPermissions("userInfo:query")
-    public String userList(){
-        return "/user/userList";
+    @ResponseBody
+    public Map userList(Integer page, Integer limit,UserInfo userInfo){
+        Map<String, Object> result = new HashMap<>();
+        Integer count = userInfoService.countUserInfo(userInfo);
+        List<Map<String,Object>> list = userInfoService.listUserInfo(userInfo,page,limit);
+        result.put("code","0");
+        result.put("msg","");
+        result.put("count",count);
+        result.put("data",list);
+        return result;
     }
 }

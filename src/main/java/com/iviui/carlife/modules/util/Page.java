@@ -7,7 +7,7 @@ package com.iviui.carlife.modules.util;
  */
 public class Page {
     private Integer pagenum = 1;// 当前页
-    private Integer pagesize = 20;// 每页显示的记录数
+    private Integer pagesize = 10;// 每页显示的记录数
     private Integer offset = 0;//起点
     public Page(){
     }
