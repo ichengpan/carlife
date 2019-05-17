@@ -10,14 +10,12 @@
 <div class="dowebok">
     <div class="logo"></div>
     <form id="loginForm" action="/login" method="post">
-        <h4 th:text="${msg}"/>
         <div class="form-item">
-            <input name="username" type="text" value="admin" autocomplete="off" placeholder="邮箱">
-            <p class="tip">请输入合法的邮箱地址</p>
+            <input name="username" onfocus="cleanMsg()" type="text" value="admin" autocomplete="off" placeholder="邮箱">
         </div>
         <div class="form-item">
-            <input name="password" type="password" value="123456" autocomplete="off" placeholder="登录密码">
-            <p class="tip">邮箱或密码不正确</p>
+            <input name="password" onfocus="cleanMsg()" type="password" value="123456" autocomplete="off" placeholder="登录密码">
+            <p class="tip"th:text="${msg}"></p>
         </div>
         <div class="form-item"><button id="submit">登 录</button></div>
         <div class="reg-bar">
@@ -40,6 +38,9 @@
         } else {
             $("#loginForm").submit();
         }
+    }
+    function cleanMsg(){
+        $(".tip").text("");
     }
     $(function () {
         $('#submit').click(function(){
