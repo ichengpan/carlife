@@ -17,7 +17,10 @@ import java.util.Date;
 @EnableScheduling
 public class QuartzTask {
 
-    @Scheduled(cron = "0 0/10 * * * ?")//http://cron.qqe2.com/表达式生成网址
+    /**
+     * http://cron.qqe2.com/表达式生成网址
+     */
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void schTest1() {
         Date date = new Date();
         SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
