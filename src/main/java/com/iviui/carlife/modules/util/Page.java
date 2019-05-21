@@ -15,7 +15,6 @@ public class Page {
     public Page(Integer pagenum,Integer pagesize){
         this.setPagenum(pagenum);
         this.setPagesize(pagesize);
-        this.setOffset((pagenum-1)*pagesize);
     }
 
     public Integer getPagenum() {
@@ -32,10 +31,20 @@ public class Page {
     }
 
     public Integer getOffset() {
+        this.offset = (pagenum-1)*pagesize;
         return offset;
     }
 
     public void setOffset(Integer offset) {
         this.offset = offset;
+    }
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "pagenum=" + pagenum +
+                ", pagesize=" + pagesize +
+                ", offset=" + offset +
+                '}';
     }
 }

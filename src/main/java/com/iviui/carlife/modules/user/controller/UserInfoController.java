@@ -1,7 +1,7 @@
 package com.iviui.carlife.modules.user.controller;
 
-import com.iviui.carlife.modules.login.vo.UserInfo;
 import com.iviui.carlife.modules.user.service.UserInfoService;
+import com.iviui.carlife.modules.user.vo.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,10 +52,12 @@ public class UserInfoController {
     @RequestMapping(value="/userList",method= RequestMethod.GET)
     @RequiresPermissions("userInfo:query")
     @ResponseBody
-    public Map userList(Integer page, Integer limit,UserInfo userInfo){
+    public Map userList(Integer page, Integer limit, User userInfo){
+        userInfo.setPagenum(page);
+        userInfo.setPagesize(limit);
         Map<String, Object> result = new HashMap<>();
         Integer count = userInfoService.countUserInfo(userInfo);
-        List<Map<String,Object>> list = userInfoService.listUserInfo(userInfo,page,limit);
+        List<Map<String,Object>> list = userInfoService.listUserInfo(userInfo);
         result.put("code","0");
         result.put("msg","");
         result.put("count",count);

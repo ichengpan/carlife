@@ -1,6 +1,6 @@
 package com.iviui.carlife.modules.user.mapper;
 
-import com.iviui.carlife.modules.util.Page;
+import com.iviui.carlife.modules.user.vo.User;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  */
 @Mapper
 public interface UserInfoMapper{
-    Integer countUserInfo();
+    Integer countUserInfo(User user);
 
-    List<Map<String, Object>> listUserInfo(Page page);
+    List<Map<String, Object>> listUserInfo(User user);
 }

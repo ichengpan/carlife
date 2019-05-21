@@ -1,6 +1,6 @@
 package com.iviui.carlife.modules.user.service;
 
-import com.iviui.carlife.modules.login.vo.UserInfo;
+import com.iviui.carlife.modules.user.vo.User;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface UserInfoService {
 
-    Integer countUserInfo(UserInfo userInfo);
+    Integer countUserInfo(User userInfo);
 
-    List<Map<String, Object>> listUserInfo(UserInfo userInfo, Integer page, Integer limit);
+    List<Map<String, Object>> listUserInfo(User userInfo);
 }

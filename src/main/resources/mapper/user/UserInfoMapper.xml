@@ -2,18 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.iviui.carlife.modules.user.mapper.UserInfoMapper">
-
+    
     <resultMap id="userInfo" type="com.iviui.carlife.modules.login.vo.UserInfo">
         <id property="uid" column="uid"/>
         <result property="name" column="name"/>
         <result property="username" column="username"/>
         <result property="state" column="state"/>
     </resultMap>
+    <sql id="whereSql">
+        <if test="uid != null  and uid != ''" >
+            and uid = #{uid}
+        </if>
+        <if test="username != null  and username != ''" >
+            and username = #{username}
+        </if>
+    </sql>
 
-    <select id="countUserInfo" resultType="integer">
-        select count(*) from user_info
+    <select id="countUserInfo" resultType="integer" parameterType="com.iviui.carlife.modules.user.vo.User">
+        select count(*) from user_info <where><include refid="whereSql"/></where>
     </select>
-    <select id="listUserInfo" resultMap="userInfo">
-        select uid,name,username,state from user_info limit #{offset},#{pagesize}
+    <select id="listUserInfo" resultMap="userInfo" parameterType="com.iviui.carlife.modules.user.vo.User">
+        select uid,name,username,state from user_info <where><include refid="whereSql"/></where> limit #{offset},#{pagesize}
     </select>
 </mapper>

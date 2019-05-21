@@ -1,9 +1,8 @@
 package com.iviui.carlife.modules.user.service.impl;
 
-import com.iviui.carlife.modules.login.vo.UserInfo;
 import com.iviui.carlife.modules.user.mapper.UserInfoMapper;
 import com.iviui.carlife.modules.user.service.UserInfoService;
-import com.iviui.carlife.modules.util.Page;
+import com.iviui.carlife.modules.user.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +21,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     private UserInfoMapper userInfoMapper;
 
     @Override
-    public Integer countUserInfo(UserInfo userInfo) {
-        return userInfoMapper.countUserInfo();
+    public Integer countUserInfo(User userInfo) {
+        return userInfoMapper.countUserInfo(userInfo);
     }
 
     @Override
-    public List<Map<String, Object>> listUserInfo(UserInfo userInfo, Integer page, Integer limit) {
-        return userInfoMapper.listUserInfo(new Page(page,limit));
+    public List<Map<String, Object>> listUserInfo(User userInfo) {
+
+        return userInfoMapper.listUserInfo(userInfo);
     }
 }
