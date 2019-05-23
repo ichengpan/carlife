@@ -69,12 +69,12 @@ class LoginController {
         }
         map.put("userInfo",userInfo);
         map.put("list",resultData);
-        return"/index";
+        return"index";
     }
 
     @RequestMapping(value = "/login")
     public String login(){
-        return"/login";
+        return"login";
     }
 
     @RequestMapping(value = "/register", method=RequestMethod.GET)
@@ -110,7 +110,7 @@ class LoginController {
         userInfo.setRoleList(roleList);
         boolean result = loginService.registerData(userInfo);
 
-        return "/login";
+        return "login";
     }
 
     @RequestMapping(value="/noAuth",method= RequestMethod.GET)
@@ -144,6 +144,6 @@ class LoginController {
         }
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理.
-        return "/login";
+        return "login";
     }
 }
