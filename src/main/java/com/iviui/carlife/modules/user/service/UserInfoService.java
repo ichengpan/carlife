@@ -15,4 +15,6 @@ public interface UserInfoService {
     Integer countUserInfo(User userInfo);
 
     List<Map<String, Object>> listUserInfo(User userInfo);
+
+    List<Map<String, Object>> userInfoDownLoad(User userInfo);
 }

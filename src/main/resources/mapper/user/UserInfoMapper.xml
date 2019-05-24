@@ -24,4 +24,8 @@
     <select id="listUserInfo" resultMap="userInfo" parameterType="com.iviui.carlife.modules.user.vo.User">
         select uid,name,username,state from user_info <where><include refid="whereSql"/></where> limit #{offset},#{pagesize}
     </select>
+
+    <select id="userInfoDownLoad" resultType="map" parameterType="com.iviui.carlife.modules.user.vo.User">
+        select uid,name,username,state from user_info <where><include refid="whereSql"/></where>
+    </select>
 </mapper>

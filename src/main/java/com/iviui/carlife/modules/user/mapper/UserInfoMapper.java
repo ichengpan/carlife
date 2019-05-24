@@ -15,4 +15,6 @@ public interface UserInfoMapper{
     Integer countUserInfo(User user);
 
     List<Map<String, Object>> listUserInfo(User user);
+
+    List<Map<String, Object>> userInfoDownLoad(User userInfo);
 }

@@ -30,4 +30,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         return userInfoMapper.listUserInfo(userInfo);
     }
+
+    @Override
+    public List<Map<String, Object>> userInfoDownLoad(User userInfo) {
+        return userInfoMapper.userInfoDownLoad(userInfo);
+    }
+
 }
