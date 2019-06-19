@@ -89,4 +89,17 @@ public class UserInfoController {
 
         return null;
     }
+
+    @RequestMapping(value = "/userInfoInsertBatches" ,method = RequestMethod.POST)
+    @ResponseBody
+    public void userInfoInsertBatches(){
+        userInfoService.insertBatchesUserInfo();
+    }
+
+    @RequestMapping(value = "/userInfoDownLoadBatches")
+    @ResponseBody
+    public void userInfoDownLoadBatches(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("批量下载");
+        userInfoService.downLoadBatchesUserInfo(request,response);
+    }
 }

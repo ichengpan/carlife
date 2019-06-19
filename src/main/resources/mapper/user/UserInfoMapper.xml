@@ -17,6 +17,9 @@
             and username = #{username}
         </if>
     </sql>
+    <sql id="peopleColumn">
+      id,name,if(sex=0,'男','女') sex,date_format(createTime,'%Y-%m-%d %H:%i:%s') createTime
+    </sql>
 
     <select id="countUserInfo" resultType="integer" parameterType="com.iviui.carlife.modules.user.vo.User">
         select count(*) from user_info <where><include refid="whereSql"/></where>
@@ -27,5 +30,17 @@
 
     <select id="userInfoDownLoad" resultType="map" parameterType="com.iviui.carlife.modules.user.vo.User">
         select uid,name,username,state from user_info <where><include refid="whereSql"/></where>
+    </select>
+
+    <insert id="insertUserInfo" parameterType="map">
+        insert into people values
+        <foreach collection="list" item="people" separator=",">
+            (#{people.id},#{people.name},#{people.sex},sysdate())
+        </foreach>
+
+    </insert>
+
+    <select id="queryPeopleData" parameterType="map" resultType="map">
+        select <include refid="peopleColumn"/> from people p where p.id &lt; 1100
     </select>
 </mapper>

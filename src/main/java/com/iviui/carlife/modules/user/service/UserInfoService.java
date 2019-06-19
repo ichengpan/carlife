@@ -2,6 +2,8 @@ package com.iviui.carlife.modules.user.service;
 
 import com.iviui.carlife.modules.user.vo.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +19,8 @@ public interface UserInfoService {
     List<Map<String, Object>> listUserInfo(User userInfo);
 
     List<Map<String, Object>> userInfoDownLoad(User userInfo);
+
+    void insertBatchesUserInfo();
+
+    void downLoadBatchesUserInfo(HttpServletRequest request, HttpServletResponse response);
 }

@@ -21,6 +21,8 @@
         </div>
         <button class="layui-btn" data-type="reload">搜索</button>
         <button class="layui-btn" onclick="userInfoDownLoad()" style="margin-left: 10px;">下载</button>
+        <button class="layui-btn" onclick="insertBatches()" style="margin-left: 10px;">批量新增</button>
+        <button class="layui-btn" onclick="downLoadBatches()" style="margin-left: 10px;">批量下载</button>
     </div>
 </div>
 <table class="layui-hide" id="demo" lay-filter="test"></table>
@@ -136,6 +138,25 @@
         var url="/userInfo/userInfoDownLoad?"+params;
         window.open(url);
     }
+    var insertBatches =function () {
+        $.ajax({
+            url        : "/userInfo/userInfoInsertBatches"
+            ,type       : "post"
+            ,data       : {}
+            ,dataType   : "json"
+            ,async      : false
+            ,success    : function(response) {}
+            ,exception  : function(response) {
+                alert(response.message);
+            }
+        });
+    }
+    
+    var downLoadBatches = function () {
+        var url="/userInfo/userInfoDownLoadBatches";
+        window.open(url);
+    }
+
 </script>
 <script type="text/html" id="statusTpl">
     {{#  if(d.state === 0){ }}
