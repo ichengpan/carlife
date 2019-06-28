@@ -12,10 +12,10 @@
         <div class="layui-logo">汽车生活</div>
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item">
-                <a href="">控制台<span class="layui-badge">9</span></a>
+                <a onclick="consoleDesk()">控制台<span class="layui-badge">9</span></a>
             </li>
             <li class="layui-nav-item">
-                <a href="">个人中心<span class="layui-badge-dot"></span></a>
+                <a onclick="alert('个人中心')">个人中心<span class="layui-badge-dot"></span></a>
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
@@ -59,6 +59,10 @@
             layer.msg(elem.text());
         });
     });
+
+    function consoleDesk(){
+        alert("控制台");
+    }
 </script>
 </body>
 </html>
