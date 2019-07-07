@@ -11,10 +11,10 @@
     <div class="logo"></div>
     <form id="loginForm" action="/login" method="post">
         <div class="form-item">
-            <input name="username" onfocus="cleanMsg()" type="text" value="admin" autocomplete="off" placeholder="邮箱">
+            <input name="username" onfocus="cleanMsg()" type="text" autocomplete="off" placeholder="登录账号">
         </div>
         <div class="form-item">
-            <input name="password" onfocus="cleanMsg()" type="password" value="123456" autocomplete="off" placeholder="登录密码">
+            <input name="password" onfocus="cleanMsg()" type="password" autocomplete="off" placeholder="登录密码">
             <p class="tip"th:text="${msg}"></p>
         </div>
         <div class="form-item"><button id="submit">登 录</button></div>
@@ -30,7 +30,7 @@
         var username = $("input[name='username']").val();
         var password = $("input[name='password']").val();
         if (username == "" || username == null || username == undefined) {
-            alert("用户名不能为空");
+            alert("账号不能为空");
             return false;/*阻止表单提交*/
         } else if (password == "" || password == null || password == undefined) {
             alert("密码不能为空");
@@ -44,7 +44,7 @@
     }
     $(function () {
         $('#submit').click(function(){
-            submitData();
+            return  submitData();
         });
     })
 </script>

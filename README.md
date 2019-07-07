@@ -13,3 +13,4 @@
 2、更改数据库配置信息 resources\application.properties
 
 启动项目即可
+初始用户名密码为admin/123456
