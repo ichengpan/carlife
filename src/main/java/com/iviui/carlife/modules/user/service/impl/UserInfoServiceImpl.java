@@ -8,6 +8,10 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +34,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    //事务管理
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @Override
     public Integer countUserInfo(User userInfo) {
@@ -127,6 +135,27 @@ public class UserInfoServiceImpl implements UserInfoService {
         return wb;
     }
 
+    @Override
+    public String insertPeople() {
+        List<Map<String,Object>> dataList = new ArrayList<>();
+        Map<String, Object> data = new HashMap<>();
+        data.put("id",1);
+        data.put("name","cheng");
+        data.put("sex",1);
+        dataList.add(data);
 
-
+        new TransactionTemplate(transactionManager).execute(new TransactionCallback<Object>() {
+            @Override
+            public Object doInTransaction(TransactionStatus status) {
+                try {
+                    int i = userInfoMapper.insertUserInfo(dataList);
+                    return "新增成功";
+                }catch (Exception e){
+                    status.setRollbackOnly();
+                    return e.getMessage();
+                }
+            }
+        });
+        return null;
+    }
 }

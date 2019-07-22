@@ -102,4 +102,10 @@ public class UserInfoController {
         System.out.println("批量下载");
         userInfoService.downLoadBatchesUserInfo(request,response);
     }
+
+    @RequestMapping(value = "/insertPeople" ,method = RequestMethod.GET)
+    @ResponseBody
+    public String insertPeople(){
+        return userInfoService.insertPeople();
+    }
 }

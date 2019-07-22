@@ -23,4 +23,6 @@ public interface UserInfoService {
     void insertBatchesUserInfo();
 
     void downLoadBatchesUserInfo(HttpServletRequest request, HttpServletResponse response);
+
+    String insertPeople();
 }

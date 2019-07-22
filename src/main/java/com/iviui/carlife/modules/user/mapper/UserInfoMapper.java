@@ -18,7 +18,7 @@ public interface UserInfoMapper{
 
     List<Map<String, Object>> userInfoDownLoad(User userInfo);
 
-    void insertUserInfo(List<Map<String, Object>> list);
+    int insertUserInfo(List<Map<String, Object>> list);
 
     List<Map<String, Object>> queryPeopleData(Map<String, Object> paramMap);
 }
