@@ -66,7 +66,6 @@
 
         var $ = layui.$, active = {
             reload: function () {
-                console.log($('#demoReload').val())
                 //执行重载
                 table.reload('testReload', {
                     page: {
@@ -89,7 +88,6 @@
         table.on('toolbar(test)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id)
                 , data = checkStatus.data; //获取选中的数据
-            console.log(data);
             switch (obj.event) {
                 case 'add':
                     layer.msg('添加');
@@ -100,8 +98,7 @@
                     } else if (data.length > 1) {
                         layer.msg('只能同时编辑一个');
                     } else {
-                        console.log(checkStatus.data[0]);
-                        layer.alert('编辑 [id]：' + checkStatus.data[0].uid);
+                        layer.alert('编辑 [id]：' + data[0].uid);
                     }
                     break;
                 case 'delete':
