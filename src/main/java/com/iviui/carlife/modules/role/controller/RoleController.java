@@ -17,6 +17,6 @@ public class RoleController {
     @RequestMapping(value="/roleInfo",method= RequestMethod.GET)
     @RequiresPermissions("role:info")
     public String roleInfo(){
-        return"/role/roleInfo";
+        return"role/roleInfo";
     }
 }
