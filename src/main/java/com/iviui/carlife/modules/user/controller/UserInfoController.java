@@ -36,13 +36,13 @@ public class UserInfoController {
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     @RequiresPermissions("userInfo:info")
     public String userInfo() {
-        return "/user/userInfo";
+        return "user/userInfo";
     }
 
     @RequestMapping(value = "/userAdd", method = RequestMethod.GET)
     @RequiresPermissions("userInfo:add")
     public String userAdd() {
-        return "/user/userAdd";
+        return "user/userAdd";
     }
 
     @RequestMapping(value = "/userDel", method = RequestMethod.GET)
