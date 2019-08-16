@@ -51,10 +51,18 @@ public class UserInfoController {
         return "/user/userDel";
     }
 
+    @RequestMapping(value = "/getUserInfoByUid", method = RequestMethod.GET)
+    //@RequiresPermissions("userInfo:getUserInfo")
+    @ResponseBody
+    public Map<String, Object> getUserInfoByUid(String uid) {
+        return userInfoService.getUserInfoByUid(uid);
+    }
+
     @RequestMapping(value = "/userUpdate", method = RequestMethod.GET)
     @RequiresPermissions("userInfo:edit")
-    public String userUpdate() {
-        return "/user/userUpdate";
+    public String userUpdate(String uid, Map<String, Object> map) {
+        map.put("uid",uid);
+        return "user/userUpdate";
     }
 
     @RequestMapping(value = "/userList", method = RequestMethod.GET)

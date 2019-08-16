@@ -158,4 +158,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         });
         return null;
     }
+
+    @Override
+    public Map<String, Object> getUserInfoByUid(String uid) {
+        return userInfoMapper.getUserInfoByUid(uid);
+    }
 }

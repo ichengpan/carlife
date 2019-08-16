@@ -21,4 +21,6 @@ public interface UserInfoMapper{
     int insertUserInfo(List<Map<String, Object>> list);
 
     List<Map<String, Object>> queryPeopleData(Map<String, Object> paramMap);
+
+    Map<String, Object> getUserInfoByUid(String uid);
 }

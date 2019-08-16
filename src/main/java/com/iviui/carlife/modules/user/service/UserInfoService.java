@@ -25,4 +25,6 @@ public interface UserInfoService {
     void downLoadBatchesUserInfo(HttpServletRequest request, HttpServletResponse response);
 
     String insertPeople();
+
+    Map<String, Object> getUserInfoByUid(String uid);
 }

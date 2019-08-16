@@ -43,4 +43,8 @@
     <select id="queryPeopleData" parameterType="map" resultType="map">
         select <include refid="peopleColumn"/> from people p where p.id &lt; 1100
     </select>
+
+    <select id="getUserInfoByUid" parameterType="string" resultType="map">
+        select uid,name,username,state from user_info where uid = #{uid}
+    </select>
 </mapper>
