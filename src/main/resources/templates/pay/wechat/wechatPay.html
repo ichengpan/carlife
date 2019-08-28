@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>userInfo</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <script src="/layui/layui.js"></script>
+    <script type="text/javascript" th:inline="none"></script>
+    <script src="/loginpage/js/jquery.min.js"></script>
+</head>
+<body>
+<div style="padding: 15px;">
+    <div class="demoTable">
+        金额：
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="moneyAmount" autocomplete="off">
+        </div>
+        商品名称：
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="bodyName" autocomplete="off">
+        </div>
+        <button class="layui-btn" onclick="wechatPay()" style="margin-left: 10px;">微信支付</button>
+    </div>
+</div>
+<script>
+    var layer;
+    layui.use(['layer', 'table'], function () {
+        layer = layui.layer; //弹层
+    });
+    var wechatPay = function () {
+        var money = $.trim($("#moneyAmount").val());
+        var bodyName = $.trim($("#bodyName").val());
+        if(money == "" ||isNaN(Number(money))){
+            alert("请填写支付的金额");
+            return;
+        };
+        layer.open({
+            type: 2
+            , title: false //不显示标题栏
+            , closeBtn: false
+            , area: ["260px","310px"]
+            , shade: 0.8
+            , id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            , btn: ['关闭']
+            , btnAlign: 'c'
+            , moveType: 1 //拖拽模式，0或者1
+            , content: "/wx/wxPay?total_fee=" + money+"&body="+bodyName
+        })
+    }
+</script>
+</body>
+</html>
