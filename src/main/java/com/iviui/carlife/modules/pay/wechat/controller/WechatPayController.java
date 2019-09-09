@@ -18,4 +18,10 @@ public class WechatPayController {
     public String wechatPay() {
         return "pay/wechat/wechatPay";
     }
+
+    @RequestMapping("aliPay")
+    @RequiresPermissions("pay:alipay")
+    public String aliPay() {
+        return "pay/ali/aliPay";
+    }
 }

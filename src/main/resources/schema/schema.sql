@@ -106,8 +106,9 @@ INSERT INTO `sys_permission` VALUES ('8', '', '角色添加', '7', '0/1/7', 'ro
 INSERT INTO `sys_permission` VALUES ('9', '', '角色删除', '7', '0/1/7', 'role:del', 'button', 'role/roleDel');
 INSERT INTO `sys_permission` VALUES ('10', '', '角色修改', '7', '0/1/7', 'role:edit', 'button', 'role/roleUpdate');
 INSERT INTO `sys_permission` VALUES ('11', '', '角色查询', '7', '0/1/7', 'role:query', 'button', 'role/roleList');
-INSERT INTO `sys_permission` VALUES ('12', '', '支付设置', 0, '0', 'pay:payinfo', 'menu', 'pay/payinfo');
-INSERT INTO `sys_permission` VALUES ('13', '', '微信支付', 12, '0/12', 'pay:wechatpay', 'button', 'pay/wechatPay');
+INSERT INTO `sys_permission` VALUES ('12', '', '支付设置', '0', '0', 'pay:payinfo', 'menu', 'pay/payinfo');
+INSERT INTO `sys_permission` VALUES ('13', '', '微信支付', '12', '0/12', 'pay:wechatpay', 'button', 'pay/wechatPay');
+INSERT INTO `sys_permission` VALUES ('14', '', '支付宝支付', '12', '0/12', 'pay:alipay', 'button', 'pay/aliPay');
 /*
 Navicat MySQL Data Transfer
 
@@ -185,6 +186,7 @@ INSERT INTO `sys_role_permission` VALUES ('1', '10');
 INSERT INTO `sys_role_permission` VALUES ('1', '11');
 INSERT INTO `sys_role_permission` VALUES ('1', '12');
 INSERT INTO `sys_role_permission` VALUES ('1', '13');
+INSERT INTO `sys_role_permission` VALUES ('1', '14');
 
 /*
 Navicat MySQL Data Transfer

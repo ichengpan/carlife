@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>userInfo</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <script src="/layui/layui.js"></script>
+    <script type="text/javascript" th:inline="none"></script>
+    <script src="/loginpage/js/jquery.min.js"></script>
+    <script src="/QRCode/qrcode.min.js"></script>
+    <style>
+        #qrImg {
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+<div style="padding: 15px;">
+    <div class="demoTable">
+        金额：
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="moneyAmount" autocomplete="off">
+        </div>
+        商品名称：
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="bodyName" autocomplete="off">
+        </div>
+        <button class="layui-btn" onclick="aliPay()" style="margin-left: 10px;">支付宝支付</button>
+        <div id="qrImg"></div>
+    </div>
+</div>
+<script>
+    var qrcode = new QRCode(document.getElementById("qrImg"), {
+        width: 200,
+        height: 200
+    });
+
+    var aliPay = function () {
+        var money = $.trim($("#moneyAmount").val());
+        var bodyName = $.trim($("#bodyName").val());
+        $.ajax({
+            url: "/aliPay/alipay"
+            , type: "post"
+            , data: {payAmount: money, orderId: "112233"}
+            , dataType: "json"
+            , async: false
+            , success: function (response) {
+                qrcode.makeCode(response.alipayCode);
+            }
+            , exception: function (response) {
+                alert(response.msg);
+            }
+        });
+    }
+</script>
+</body>
+</html>
