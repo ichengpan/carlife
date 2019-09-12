@@ -8,7 +8,6 @@ import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,35 +29,38 @@ public class AliPay {
 
     /**
      *
-     * @param orderId
-     * @param describe
-     * @param subject
-     * @param payAmount
-     * @return
+     * @param orderId 订单号
+     * @param subject 订单描述
+     * @param payAmount 订单总金额
+     * @return 支付路径
      * @throws AlipayApiException
      */
-    public static String getCodeUrl(String orderId,String describe, String subject, String payAmount) throws AlipayApiException {
+    public String getCodeUrl(String orderId, String subject, String payAmount) throws AlipayApiException {
         /**
          * 账号信息
          */
-        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.GETEWAY_URL, AlipayConfig.APP_ID,
+        //获得初始化的AlipayClient
+        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.DEV_GETEWAY_URL, AlipayConfig.DEV_APP_ID,
                 AlipayConfig.MERCHANT_PRIVATE_KEY, AlipayConfig.FORMAT, AlipayConfig.CHARSET, AlipayConfig.ALIPAY_PUBLIC_KEY, AlipayConfig.SIGN_TYPE);
-        AlipayTradePrecreateRequest  alipayRequest = new AlipayTradePrecreateRequest();
+        //创建API对应的request类
+        AlipayTradePrecreateRequest alipayRequest = new AlipayTradePrecreateRequest();
         //设置回调地址
         alipayRequest.setNotifyUrl(AlipayConfig.NOTIFY_URL);
         // 封装请求支付信息
-        AlipayTradeWapPayModel model=new AlipayTradeWapPayModel();
-        model.setOutTradeNo(orderId);
-        model.setSubject(subject);
-        model.setTotalAmount(payAmount);
-        model.setBody(describe);
-        model.setTimeoutExpress(AlipayConfig.TIMEOUT_EXPRESS);
-        String returndata = JSONObject.toJSONString(model);
+        Map<Object, Object> data = new HashMap<>();
+        //订单号 必填
+        data.put("out_trade_no",orderId);
+        //订单总金额 单位元
+        data.put("total_amount",payAmount);
+        //订单标题
+        data.put("subject",subject);
+        //门店编号
+        data.put("store_id","NJ_001");
+        //该订单最晚付款时间 逾期关闭交易
+        data.put("timeout_express",AlipayConfig.TIMEOUT_EXPRESS);
+        String paramData = JSONObject.toJSONString(data);
         //设置业务参数
-        alipayRequest.setBizContent(returndata);
-        /**
-         * 通过alipayClient调用API，获得对应的response类
-         */
+        alipayRequest.setBizContent(paramData);
         AlipayTradePrecreateResponse response = alipayClient.execute(alipayRequest);
         String body = response.getBody();
         JSONObject jsonObject = JSONObject.parseObject(body);
@@ -73,21 +75,25 @@ public class AliPay {
         Map<String,Object> map = new HashMap<>();
         if(StringUtils.isBlank(paramMap.get("orderId"))){
             map.put("msg","参数orderId不能为空");
+            map.put("code",0);
         }
         try {
-            String codeUrl = getCodeUrl(paramMap.get("orderId"), "订单描述", "描述", paramMap.get("payAmount"));
+            String codeUrl = getCodeUrl(paramMap.get("orderId"),  paramMap.get("subject"), paramMap.get("payAmount"));
             if(StringUtils.isNotBlank(codeUrl)){
                 map.put("msg","支付地址获取成功");
+                map.put("code",1);
                 map.put("alipayCode",codeUrl);
             } else {
                 map.put("msg","支付地址获取失败");
+                map.put("code",0);
             }
         } catch (AlipayApiException e){
             map.put("msg","支付地址获取失败");
+            map.put("code",0);
         } catch (Exception e){
             map.put("msg",e.getMessage());
+            map.put("code",0);
         }
-        map.put("alipayCode","weixin://wxpay/bizpayurl?pr=v3SOQiQ");
         return  map;
     }
 }
